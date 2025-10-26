@@ -3,213 +3,238 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Accessible Dark Template with Clickable Cards</title>
+<title>Landing Space</title>
 <style>
   :root {
-    --bg-main: #000033;
-    --bg-card: #1a1a1a;
-    --bg-accent: #2e2e2e;
-    --text-main: #ffffff;
-    --link-color: #66ccff;
-    --hover-link: #99e6ff;
-    --highlight: #4b3621;
-
-    /* Background image variables */
-    --bg-image: url('https://example.com/background-image.jpg');
-    --header-bg: url('https://example.com/header-image.jpg');
+    --bg-color: #000033;
+    --text-color: #ffffff;
+    --header-bg: url('header.jpg');
+    --page-bg: url('background.jpg');
   }
 
   body {
-    background-color: var(--bg-main);
-    background-image: var(--bg-image);
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    color: var(--text-main);
     font-family: 'Helvetica Neue', Arial, sans-serif;
     font-size: 18px;
-    line-height: 1.6;
+    background: var(--bg-color) no-repeat center/cover;
+    background-image: var(--page-bg);
+    color: var(--text-color);
     margin: 0;
-    padding: 0;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: center;
   }
 
   .container {
     max-width: 800px;
     width: 100%;
-    padding: 1.5rem;
-    backdrop-filter: blur(4px);
-    background-color: rgba(0, 0, 0, 0.6);
-    border-radius: 12px;
+    padding: 20px;
   }
 
   header {
-    background-color: var(--bg-accent);
-    background-image: var(--header-bg);
-    background-size: cover;
-    background-position: center;
-    background-blend-mode: multiply;
-    padding: 1rem;
-    border-radius: 12px;
+    background: var(--header-bg) center/cover no-repeat, #111;
+    padding: 20px;
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    margin-bottom: 2rem;
+    align-items: flex-start;
+    gap: 10px;
   }
 
-  .branding {
+  .header-top {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    width: 100%;
   }
 
   .logo {
-    background-color: var(--highlight);
-    color: #fff;
     font-weight: bold;
-    padding: 0.8rem 1.2rem;
+    font-size: 1.2em;
+    background: #4b0082;
+    padding: 10px 20px;
     border-radius: 8px;
+    flex-shrink: 0;
   }
 
   .main-title {
-    font-size: 1.6rem;
-    font-weight: 600;
+    flex: 1;
+    text-align: left;
+    padding-left: 20px;
+    font-size: 1.4em;
   }
 
-  .intro {
-    background-color: var(--bg-card);
-    padding: 1rem;
+  .sub-text {
+    font-size: 1em;
+    line-height: 1.4em;
+    width: 100%;
+    padding-left: 5px;
+  }
+
+  .subcategory-row {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px 0;
+  }
+
+  .subcategory {
+    background: #333;
+    color: white;
+    border: 2px solid #555;
     border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background 0.3s, border-color 0.3s;
   }
 
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2rem;
+  .subcategory.active {
+    background: #ffffff;
+    color: #000033;
+    border-color: #ffffff;
+  }
+
+  .card-grid, .markdown-section {
+    display: none;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  .card-grid.active, .markdown-section.active {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    opacity: 1;
   }
 
   .card {
-    position: relative;
+    width: 220px;
+    height: 140px;
     border-radius: 16px;
-    background-color: var(--bg-card);
-    background-size: cover;
-    background-position: center;
-    background-blend-mode: multiply;
-    overflow: hidden;
-    transition: transform 0.2s ease, background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--text-color);
+    background: var(--card-color, #222) center/cover no-repeat;
+    background-image: var(--card-bg);
+    transition: transform 0.3s, box-shadow 0.3s;
   }
 
   .card:hover {
-    background-color: #333333;
-    transform: translateY(-4px);
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(255,255,255,0.2);
   }
 
-  .card a {
-    display: flex;
+  .markdown-section {
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: var(--text-main);
-    text-decoration: none;
-    height: 100%;
-    width: 100%;
-    padding: 1.5rem;
-    box-sizing: border-box;
-    text-align: center;
+    align-items: flex-start;
+    color: var(--text-color);
   }
 
-  .card a:hover,
-  .card a:focus {
-    color: var(--link-color);
-    text-decoration: none;
+  .markdown-section h1, 
+  .markdown-section h2, 
+  .markdown-section h3 {
+    color: #ffffff;
+    margin-top: 20px;
+  }
+
+  .markdown-section p {
+    line-height: 1.6;
+    margin: 10px 0;
+  }
+
+  .markdown-section a {
+    color: #66ccff;
+    text-decoration: underline;
   }
 
   footer {
-    background-color: var(--bg-accent);
-    padding: 1rem;
-    border-radius: 8px;
     text-align: center;
-    color: var(--text-main);
-    font-size: 0.95rem;
-  }
-
-  a {
-    color: var(--link-color);
-  }
-
-  a:hover, a:focus {
-    color: var(--hover-link);
-    text-decoration: underline;
+    margin-top: 30px;
+    font-size: 0.9em;
+    color: #bbb;
   }
 </style>
 </head>
 <body>
   <div class="container">
     <header>
-      <div class="branding">
-        <div class="logo">Logo</div>
-        <div class="main-title">Main Branding Name</div>
+      <div class="header-top">
+        <div class="logo">M</div>
+        <div class="main-title">Maxx's Corner</div>
       </div>
-      <div class="intro">
-        <p>Two liner introductory text goes here. This text provides a quick overview or tagline for the brand.</p>
-      </div>
+      <div class="sub-text">Thanks for checking in!<br>Site is under construction and may not be fully optimised. Sorry for the inconvenience!</div>
     </header>
 
-    <main>
-      <div class="grid">
-        <div class="card" data-bg="https://example.com/card1.jpg">
-          <a href="#">
-            <div>Website 1 text, clickable</div>
-            <small>Link to website 1</small>
-          </a>
-        </div>
-        <div class="card" data-bg="https://example.com/card2.jpg">
-          <a href="#">
-            <div>Website 2 text, clickable</div>
-            <small>Link to website 2</small>
-          </a>
-        </div>
-        <div class="card" data-bg="https://example.com/card3.jpg">
-          <a href="#">
-            <div>Website 3 text, clickable</div>
-            <small>Link to website 3</small>
-          </a>
-        </div>
-        <div class="card" data-bg="https://example.com/card4.jpg">
-          <a href="#">
-            <div>Website 4 text, clickable</div>
-            <small>Link to website 4</small>
-          </a>
-        </div>
-        <div class="card" data-bg="https://example.com/card5.jpg">
-          <a href="#">
-            <div>Website 5 text, clickable</div>
-            <small>Link to website 5</small>
-          </a>
-        </div>
-        <div class="card" data-bg="https://example.com/card6.jpg">
-          <a href="#">
-            <div>Website 6 text, clickable</div>
-            <small>Link to website 6</small>
-          </a>
-        </div>
-      </div>
-    </main>
+    <div class="subcategory-row">
+	  <div class="subcategory active" data-target="subcategoryD">About</div>
+      <div class="subcategory" data-target="subcategoryA">Subcategory A</div>
+      <div class="subcategory" data-target="subcategoryB">Subcategory B</div>
+      <div class="subcategory" data-target="subcategoryC">Subcategory C</div>
+    </div>
 
-    <footer>
-      <p>Footer information, contact details, or accessibility statement.</p>
-    </footer>
+    <!-- Subcategory A -->
+    <div class="card-grid" id="subcategoryA">
+      <a href="#" class="card" style="--card-bg: url('cardA1.jpg'); --card-color: #444;">Website 1 text, clickable</a>
+      <a href="#" class="card" style="--card-bg: url('cardA2.jpg'); --card-color: #333;">Website 2 text, clickable</a>
+      <a href="#" class="card" style="--card-bg: url('cardA3.jpg'); --card-color: #555;">Website 3 text, clickable</a>
+    </div>
+
+    <!-- Subcategory B -->
+    <div class="card-grid" id="subcategoryB">
+      <a href="#" class="card" style="--card-bg: url('cardB1.jpg'); --card-color: #ffffff; color:#000033;">Website 1 text, clickable</a>
+      <a href="#" class="card" style="--card-bg: url('cardB2.jpg'); --card-color: #f2f2f2; color:#000033;">Website 2 text, clickable</a>
+      <a href="#" class="card" style="--card-bg: url('cardB3.jpg'); --card-color: #e0e0e0; color:#000033;">Website 3 text, clickable</a>
+    </div>
+
+    <!-- Subcategory C -->
+    <div class="card-grid" id="subcategoryC">
+      <a href="#" class="card" style="--card-bg: url('cardC1.jpg'); --card-color: #222;">Website 1 text, clickable</a>
+      <a href="#" class="card" style="--card-bg: url('cardC2.jpg'); --card-color: #333;">Website 2 text, clickable</a>
+      <a href="#" class="card" style="--card-bg: url('cardC3.jpg'); --card-color: #111;">Website 3 text, clickable</a>
+    </div>
+	
+    <!-- 📝 Subcategory D (Markdown Section) -->
+    <div class="markdown-section active" id="subcategoryD">
+      <div id="markdown-content">
+        <!-- Markdown text will render here based on markdownText -->
+      </div>
+    </div>
+
+    <footer> Such is the beauty of AI ^_^ Website is created with the assistance of ChatGPT. Feel free to responsibly tinker around with the source code :)</footer>
   </div>
 
-  <script>
-    // Apply per-card background images based on data-bg attributes
-    document.querySelectorAll('.card').forEach(card => {
-      const bg = card.getAttribute('data-bg');
-      if (bg) card.style.backgroundImage = `url('${bg}')`;
+<!-- ✅ Markdown Parser (CDN) -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+<script>
+  const subcategories = document.querySelectorAll('.subcategory');
+  const grids = document.querySelectorAll('.card-grid, .markdown-section');
+
+  subcategories.forEach(button => {
+    button.addEventListener('click', () => {
+      subcategories.forEach(b => b.classList.remove('active'));
+      button.classList.add('active');
+
+      const target = button.getAttribute('data-target');
+      grids.forEach(grid => grid.classList.remove('active'));
+      document.getElementById(target).classList.add('active');
     });
-  </script>
+  });
+
+  // 🧾 Markdown Example Content (You can replace this string easily)
+  const markdownText = `
+# Welcome to my website! 
+
+Just casually building applications and learning more about the rapidly developing tech world with the help of AI. 
+Feel free to use the resources in here and link to this space where needed. If this website helps you, i'm glad it does, as the intent was to have a handy website that can help myself :) 
+# 
+
+Currently it is still slowly getting together, i intend to keep it as clean as possible. Have fun on your journey of being an engineer! :) 
+`;
+
+  document.getElementById("markdown-content").innerHTML = marked.parse(markdownText);
+</script>
 </body>
 </html>
