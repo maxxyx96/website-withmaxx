@@ -94,6 +94,8 @@
     const overlay = document.getElementById('overlay');
     const ctx = board.getContext('2d');
     const octx = overlay.getContext('2d');
+    ctx.imageSmoothingEnabled = true;
+    octx.imageSmoothingEnabled = true;
 
     const tools = {
       pen: document.getElementById('pen'),
@@ -119,6 +121,12 @@
 
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
+
+
+    // Fix for pen & touch input
+    board.style.touchAction = 'none';
+    board.style.msTouchAction = 'none';
+    board.addEventListener('pointerdown', e => board.setPointerCapture(e.pointerId));
 
     function setActive(tool) {
       Object.values(tools).forEach(btn => btn.classList.remove('active'));
@@ -163,6 +171,7 @@
         ctx.strokeStyle = '#ffffff';
         ctx.lineWidth = w;
         ctx.lineCap = 'round';
+	      ctx.lineJoin = 'round';
         ctx.beginPath();
         ctx.moveTo(start.x, start.y);
         ctx.lineTo(pos.x, pos.y);
